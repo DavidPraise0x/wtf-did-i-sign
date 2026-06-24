@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WTF Did I Sign? — Multi-chain transaction translator. Paste any transaction hash and get a plain-English breakdown of what happened." />
+  <title>WTF Did I Sign? — Transaction Translator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>" />
+</head>
+<body>
+  <!-- Interactive Cosmic Background Canvas -->
+  <canvas id="cosmic-canvas" class="cosmic-canvas"></canvas>
+
+  <div id="app">
+    <!-- Ambient background glow -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow ambient-glow--2"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header__logo">
+        <span class="header__icon">🔍</span>
+        <h1 class="header__title">WTF Did I Sign<span class="header__question">?</span></h1>
+      </div>
+      <p class="header__tagline">Because you should know before you sign</p>
+    </header>
+
+    <!-- Search Section -->
+    <main class="search-section">
+      <div class="search-box">
+        <div class="search-box__chain-selector">
+          <button class="chain-btn active" data-chain="auto" title="Auto-detect">
+            <span class="chain-btn__icon">🔗</span>
+            <span class="chain-btn__label">Auto</span>
+          </button>
+          <button class="chain-btn" data-chain="solana" title="Solana">
+            <img src="/chains/solana.svg" alt="Solana" class="chain-btn__img" />
+            <span class="chain-btn__label">SOL</span>
+          </button>
+          <button class="chain-btn" data-chain="ethereum" title="Ethereum">
+            <img src="/chains/ethereum.svg" alt="Ethereum" class="chain-btn__img" />
+            <span class="chain-btn__label">ETH</span>
+          </button>
+          <button class="chain-btn" data-chain="base" title="Base">
+            <img src="/chains/base.svg" alt="Base" class="chain-btn__img" />
+            <span class="chain-btn__label">Base</span>
+          </button>
+          <button class="chain-btn" data-chain="polygon" title="Polygon">
+            <img src="/chains/polygon.svg" alt="Polygon" class="chain-btn__img" />
+            <span class="chain-btn__label">MATIC</span>
+          </button>
+          <button class="chain-btn" data-chain="arbitrum" title="Arbitrum">
+            <img src="/chains/arbitrum.svg" alt="Arbitrum" class="chain-btn__img" />
+            <span class="chain-btn__label">ARB</span>
+          </button>
+          <button class="chain-btn" data-chain="bsc" title="BNB Chain">
+            <img src="/chains/bsc.svg" alt="BSC" class="chain-btn__img" />
+            <span class="chain-btn__label">BNB</span>
+          </button>
+        </div>
+
+        <div class="search-box__input-row">
+          <input
+            type="text"
+            id="tx-input"
+            class="search-box__input"
+            placeholder="Paste a transaction hash..."
+            spellcheck="false"
+            autocomplete="off"
+          />
+          <button id="search-btn" class="search-box__submit" title="Translate">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="loading-state hidden">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Decoding transaction...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="error-state" class="error-state hidden">
+      <div class="error-icon">⚠️</div>
+      <p class="error-message" id="error-message"></p>
+      <button class="error-retry" id="error-retry">Try Again</button>
+    </div>
+
+    <!-- Results Section -->
+    <section id="results-section" class="results-section hidden">
+      <!-- Risk Meter -->
+      <div class="result-card risk-meter-card" id="risk-meter-card">
+        <div class="risk-meter" id="risk-meter"></div>
+      </div>
+
+      <!-- TX Overview -->
+      <div class="result-card tx-overview" id="tx-overview"></div>
+
+      <!-- Balance Changes -->
+      <div class="result-card balance-changes" id="balance-changes"></div>
+
+      <!-- Risk Warnings -->
+      <div id="risk-warnings" class="risk-warnings"></div>
+
+      <!-- Instructions -->
+      <div id="instructions-list" class="instructions-list"></div>
+    </section>
+
+    <!-- Floating History Toggle Button -->
+    <button id="history-toggle-btn" class="floating-btn history-toggle-btn" title="Recent translations">
+      <span class="btn-icon">📜</span>
+      <span class="btn-label">History</span>
+    </button>
+
+    <!-- History Drawer -->
+    <div id="history-drawer" class="history-drawer">
+      <div class="history-drawer__header">
+        <h3 class="history-drawer__title">Recent Lookups</h3>
+        <button id="history-close-btn" class="history-drawer__close" title="Close">&times;</button>
+      </div>
+      <div id="history-list" class="history-drawer__list">
+        <p class="history-empty">No recent translations yet.</p>
+      </div>
+      <div class="history-drawer__footer">
+        <button id="history-clear-btn" class="history-drawer__clear-btn">Clear History</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>WTF Did I Sign? — 100% free, 100% client-side, zero tracking</p>
+      <p style="margin-top: var(--space-xs); font-size: 0.75rem; color: var(--text-tertiary);">Built by davidpraise 2026</p>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

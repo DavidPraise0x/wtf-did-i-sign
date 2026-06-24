@@ -1,0 +1,19 @@
+{
+  "name": "wtf-did-i-sign",
+  "version": "1.0.0",
+  "description": "Multi-chain transaction translator - Because you should know before you sign",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.95.0",
+    "ethers": "^6.13.0",
+    "buffer": "^6.0.3"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

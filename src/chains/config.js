@@ -18,7 +18,7 @@ export const CHAINS = {
     explorer: 'https://solscan.io/tx/',
     addressExplorer: 'https://solscan.io/account/',
     color: '#9945FF',
-    icon: '/chains/solana.svg',
+    icon: 'chains/solana.svg',
     decimals: 9,
   },
   ethereum: {
@@ -36,7 +36,7 @@ export const CHAINS = {
     explorer: 'https://etherscan.io/tx/',
     addressExplorer: 'https://etherscan.io/address/',
     color: '#627EEA',
-    icon: '/chains/ethereum.svg',
+    icon: 'chains/ethereum.svg',
     decimals: 18,
   },
   base: {
@@ -53,7 +53,7 @@ export const CHAINS = {
     explorer: 'https://basescan.org/tx/',
     addressExplorer: 'https://basescan.org/address/',
     color: '#0052FF',
-    icon: '/chains/base.svg',
+    icon: 'chains/base.svg',
     decimals: 18,
   },
   polygon: {
@@ -70,7 +70,7 @@ export const CHAINS = {
     explorer: 'https://polygonscan.com/tx/',
     addressExplorer: 'https://polygonscan.com/address/',
     color: '#8247E5',
-    icon: '/chains/polygon.svg',
+    icon: 'chains/polygon.svg',
     decimals: 18,
   },
   arbitrum: {
@@ -87,7 +87,7 @@ export const CHAINS = {
     explorer: 'https://arbiscan.io/tx/',
     addressExplorer: 'https://arbiscan.io/address/',
     color: '#28A0F0',
-    icon: '/chains/arbitrum.svg',
+    icon: 'chains/arbitrum.svg',
     decimals: 18,
   },
   bsc: {
@@ -104,7 +104,7 @@ export const CHAINS = {
     explorer: 'https://bscscan.com/tx/',
     addressExplorer: 'https://bscscan.com/address/',
     color: '#F0B90B',
-    icon: '/chains/bsc.svg',
+    icon: 'chains/bsc.svg',
     decimals: 18,
   },
 };
